@@ -212,7 +212,7 @@ class _DefaultUpdatePrompter implements IUpdatePrompter {
   void prompt(IUpdateAgent agent) {
     UpdateInfo info = agent.getInfo();
     var size = filesize(info.fileSize);
-    var content = '最新版本：${info.versionName}\n新版本大小：$size\n\n更新内容\n${info.updateContent}';
+    var content = '最新版本：${info.versionName}\n新版本大小：$size\n\n更新内容\n\n${info.updateContent}';
 
     var buttons = <Widget>[
       FlatButton(

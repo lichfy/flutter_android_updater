@@ -238,6 +238,7 @@ class _DefaultUpdatePrompter implements IUpdatePrompter {
 
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
             title: Text('应用更新'),

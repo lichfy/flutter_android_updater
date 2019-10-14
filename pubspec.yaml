@@ -20,7 +20,7 @@ dependencies:
   install_plugin: 
     git:
       url: https://github.com/lichfy/flutter_install_plugin
-      ref: 03776042a3af62acba6cbaae0230ce0f7dc86fb0
+      ref: 10ea6036e2595a5f7a4230b091ad0a80269e0f6a
 
 dev_dependencies:
   flutter_test:

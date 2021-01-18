@@ -47,7 +47,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     if (downloader == null) downloader = UpdateDownloader();
     if (prompter == null) prompter = _DefaultUpdatePrompter(context);
     if (onFailureListener == null) onFailureListener = _DefaultFailureListener();
-    if (onDownloadListener == null) onDownloadListener = _DefaultDialogDownloadListener(context);
+    if (onDownloadListener == null) onDownloadListener = _DefaultDialogDownloadListener(context,this);
 
     _checker = UpdateChecker();
   }
@@ -172,10 +172,11 @@ class _DefaultFailureListener implements OnFailureListener {
 
 class _DefaultDialogDownloadListener implements OnDownloadListener {
   final BuildContext context;
+  final IUpdateAgent agent;
   StreamController<double> streamController = StreamController<double>();
   bool _start = false;
 
-  _DefaultDialogDownloadListener(this.context);
+  _DefaultDialogDownloadListener(this.context,this.agent);
 
   @override
   void onFinish() {
@@ -198,7 +199,12 @@ class _DefaultDialogDownloadListener implements OnDownloadListener {
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return ProgressDialog(stream: streamController.stream);
+          return WillPopScope(child: ProgressDialog(stream: streamController.stream),
+            onWillPop: (){
+              final force = agent.getInfo().isForce;
+              return Future.value(!force);
+            },
+          );
         });
   }
 }
@@ -240,10 +246,15 @@ class _DefaultUpdatePrompter implements IUpdatePrompter {
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return AlertDialog(
-            title: Text('应用更新'),
-            content: Text(content),
-            actions: buttons,
+          return WillPopScope(
+            child: AlertDialog(
+              title: Text('应用更新'),
+              content: Text(content),
+              actions: buttons,
+            ),
+            onWillPop: (){
+              return Future.value(false);
+            },
           );
         });
   }

@@ -33,7 +33,7 @@ class UpdateError {
     if (_message.length == 0) {
       return m;
     }
-    return m + "(" + _message! + ")";
+    return m + "(" + _message + ")";
   }
 
   UpdateError(this.code,{String message:''}){

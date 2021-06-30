@@ -11,10 +11,10 @@ class UpdateManager {
   final BuildContext context;
   final String url;
   final String packageName;
-  IUpdateDownloader downloader;
-  IUpdatePrompter prompter;
-  OnFailureListener onFailureListener;
-  OnDownloadListener onDownloadListener;
+  IUpdateDownloader? downloader;
+  IUpdatePrompter? prompter;
+  OnFailureListener? onFailureListener;
+  OnDownloadListener? onDownloadListener;
 
   UpdateManager(this.context, this.url, this.packageName,{this.downloader,this.prompter,this.onDownloadListener,this.onFailureListener});
 

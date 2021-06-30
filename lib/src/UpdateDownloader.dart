@@ -73,7 +73,7 @@ class UpdateDownloader implements IUpdateDownloader{
         onDone: () {
           raf.closeSync();
           agent.onFinish();
-          return 1;
+          return;
         },
         onError: (e) {
           raf.closeSync();

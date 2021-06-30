@@ -1,6 +1,6 @@
 class UpdateError {
   int code;
-  String _message;
+  String _message = '';
 
   final messages = {
     UPDATE_IGNORED: '该版本已经忽略',
@@ -26,17 +26,17 @@ class UpdateError {
   };
 
   String get message {
-    String m = messages[this.code];
+    String? m = messages[this.code];
     if (m == null) {
       return _message;
     }
-    if (_message == null) {
+    if (_message.length == 0) {
       return m;
     }
-    return m + "(" + _message + ")";
+    return m + "(" + _message! + ")";
   }
 
-  UpdateError(this.code,{String message}){
+  UpdateError(this.code,{String message:''}){
     this._message = message;
   }
 

@@ -4,7 +4,7 @@ import 'dart:async';
 class ProgressDialog extends StatelessWidget {
   final Stream<double> stream;
 
-  const ProgressDialog({Key key, this.stream}) : super(key: key);
+  const ProgressDialog({Key? key,required this.stream}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ProgressDialog extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
             String title="";
             if(snapshot.data != null){
-              title = '已下载 ${(snapshot.data*100).toInt()}%';
+              title = '已下载 ${(snapshot.data!*100).toInt()}%';
             }
             return Column(
               children: <Widget>[

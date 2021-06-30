@@ -48,7 +48,7 @@ class UpdateUtils {
     }
 
     SharedPreferences sp = await SharedPreferences.getInstance();
-    String old = sp.getString(KEY_UPDATE);
+    String? old = sp.getString(KEY_UPDATE);
     if (old == null)
       old = "";
     if (md5 == old) {

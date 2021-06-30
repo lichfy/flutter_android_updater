@@ -25,18 +25,18 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
   final String url;
   final bool isManual;
   final String packageName;
-  IUpdateDownloader downloader;
-  IUpdatePrompter prompter;
-  OnFailureListener onFailureListener;
-  OnDownloadListener onDownloadListener;
+  IUpdateDownloader? downloader;
+  IUpdatePrompter? prompter;
+  OnFailureListener? onFailureListener;
+  OnDownloadListener? onDownloadListener;
 
-  IUpdateChecker _checker;
-  UpdateInfo _info;
-  UpdateError _error;
-  File _apkFile;
-  File _tmpFile;
+  late IUpdateChecker _checker;
+  UpdateInfo? _info;
+  UpdateError? _error;
+  late File _apkFile;
+  late File _tmpFile;
 
-  String _basePath;
+  late String _basePath;
 
   UpdateAgent(this.context, this.url, this.packageName,
       {this.isManual: false,
@@ -54,7 +54,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
 
   @override
   UpdateInfo getInfo() {
-    return _info;
+    return _info!;
   }
 
   @override
@@ -64,7 +64,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
 
   @override
   void onFinish() {
-    onDownloadListener.onFinish();
+    onDownloadListener!.onFinish();
     UpdateUtils.verify(_tmpFile, basename(_tmpFile.path)).then((v) {
       //验证下载的文件(文件名就是其文件本身的md5）
       if (v) {
@@ -72,19 +72,19 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
           _install();
         });
       } else {
-        onFailureListener.onFailure(UpdateError(UpdateError.DOWNLOAD_VERIFY));
+        onFailureListener!.onFailure(UpdateError(UpdateError.DOWNLOAD_VERIFY));
       }
     });
   }
 
   @override
   void onProgress(int receivedBytes, int totalBytes) {
-    onDownloadListener.onProgress(receivedBytes, totalBytes);
+    onDownloadListener!.onProgress(receivedBytes, totalBytes);
   }
 
   @override
   void onStart() {
-    onDownloadListener.onStart();
+    onDownloadListener!.onStart();
   }
 
   @override
@@ -95,12 +95,12 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
   @override
   void setInfo(UpdateInfo info) {
     _info = info;
-    _info.appId = packageName;
+    _info!.appId = packageName;
   }
 
   @override
   void update() async {
-    if (await UpdateUtils.verify(_apkFile, _info.md5)) {
+    if (await UpdateUtils.verify(_apkFile, _info!.md5)) {
       _install();
     } else {
       _download();
@@ -112,46 +112,46 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     if (isConnect) {
       await _checker.check(this, url);
       if (_error != null) {
-        onFailureListener.onFailure(_error);
+        onFailureListener!.onFailure(_error!);
       } else {
         if (_info == null) {
-          onFailureListener.onFailure(UpdateError(UpdateError.CHECK_UNKNOWN));
+          onFailureListener!.onFailure(UpdateError(UpdateError.CHECK_UNKNOWN));
           return;
         }
 
-        if (!_info.hasUpdate) return; //不需要更新
+        if (!_info!.hasUpdate) return; //不需要更新
 
-        _basePath = (await getExternalStorageDirectory()).path;
+        _basePath = (await getExternalStorageDirectory())!.path;
 
-        UpdateUtils.setUpdate(_info.md5, _basePath);
-        _apkFile = new File(_basePath + Platform.pathSeparator + _info.md5 + ".apk");
-        _tmpFile = new File(_basePath + Platform.pathSeparator + _info.md5);
+        UpdateUtils.setUpdate(_info!.md5, _basePath);
+        _apkFile = new File(_basePath + Platform.pathSeparator + _info!.md5 + ".apk");
+        _tmpFile = new File(_basePath + Platform.pathSeparator + _info!.md5);
 
-        if (await UpdateUtils.verify(_apkFile, _info.md5)) {
+        if (await UpdateUtils.verify(_apkFile, _info!.md5)) {
           //已有
           _install();
         } else {
-          prompter.prompt(this); //显示提示框
+          prompter!.prompt(this); //显示提示框
         }
       }
     } else {
-      onFailureListener.onFailure(UpdateError(UpdateError.CHECK_NO_NETWORK));
+      onFailureListener!.onFailure(UpdateError(UpdateError.CHECK_NO_NETWORK));
     }
   }
 
   void _install() {
-    UpdateUtils.install(_apkFile, _info.appId);
+    UpdateUtils.install(_apkFile, _info!.appId);
   }
 
   void _download() async {
     try{
-      await downloader.download(this, _info.url, _tmpFile);
+      await downloader!.download(this, _info!.url, _tmpFile);
       // onDownloadListener.onFinish();
     }catch(e){
       if (e is UpdateError){        
-        onFailureListener.onFailure(e);
+        onFailureListener!.onFailure(e);
       }
-      onDownloadListener.onFinish();
+      onDownloadListener!.onFinish();
     }
 
     // .catchError((e){      

@@ -32,10 +32,10 @@ class UpdateInfo {
       hasUpdate: json['hasUpdate'] as bool,
       isForce: json['force'] as bool,
       versionCode: json['versionCode'] as int,
-      versionName: json['versionName'] as String,
-      updateContent: json['updateContent'] as String,
-      url: json['url'] as String,
-      md5: json['md5'] as String,
+      versionName: json['versionName']??'',
+      updateContent: json['updateContent']??'',
+      url: json['url']??'',
+      md5: json['md5']??'',
       fileSize: num.parse(json['fileSize'])
     );
   }

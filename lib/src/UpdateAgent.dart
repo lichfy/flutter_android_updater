@@ -47,7 +47,7 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
     if (downloader == null) downloader = UpdateDownloader();
     if (prompter == null) prompter = _DefaultUpdatePrompter(context);
     if (onFailureListener == null) onFailureListener = _DefaultFailureListener();
-    if (onDownloadListener == null) onDownloadListener = _DefaultDialogDownloadListener(context,this);
+    if (onDownloadListener == null) onDownloadListener = _DefaultDialogDownloadListener(context);
 
     _checker = UpdateChecker();
   }
@@ -172,11 +172,10 @@ class _DefaultFailureListener implements OnFailureListener {
 
 class _DefaultDialogDownloadListener implements OnDownloadListener {
   final BuildContext context;
-  final IUpdateAgent agent;
   StreamController<double> streamController = StreamController<double>();
   bool _start = false;
 
-  _DefaultDialogDownloadListener(this.context,this.agent);
+  _DefaultDialogDownloadListener(this.context);
 
   @override
   void onFinish() {

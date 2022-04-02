@@ -1,6 +1,6 @@
 
- abstract class OnDownloadListener {
-   void onStart();
+abstract class OnDownloadListener {
+   void onStart([bool force = false]);
 
    void onProgress(int receivedBytes, int totalBytes);
 

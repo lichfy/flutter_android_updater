@@ -23,7 +23,7 @@ class UpdateDownloader implements IUpdateDownloader{
       return Future.error(UpdateError(UpdateError.DOWNLOAD_NETWORK_BLOCKED));
     }
 
-    agent.onStart();
+    agent.onStart(agent.getInfo().isForce);
 
     final httpClient = new HttpClient()..connectionTimeout = const Duration(seconds: 10);
     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
@@ -82,7 +82,7 @@ class UpdateDownloader implements IUpdateDownloader{
         },
         cancelOnError: true,
       );
-    }catch(FileSystemException){
+    }catch(fileSystemException){
       return Future.error(UpdateError(UpdateError.STORAGE_PERMISSION_DENIED));
     }
   }

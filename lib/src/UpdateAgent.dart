@@ -83,8 +83,8 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
   }
 
   @override
-  void onStart() {
-    onDownloadListener!.onStart();
+  void onStart([bool force = false]) {
+    onDownloadListener!.onStart(force);
   }
 
   @override
@@ -193,7 +193,7 @@ class _DefaultDialogDownloadListener implements OnDownloadListener {
   }
 
   @override
-  void onStart() {
+  void onStart([bool force = false]) {
     _start = true;
     showDialog(
         context: context,
@@ -201,7 +201,6 @@ class _DefaultDialogDownloadListener implements OnDownloadListener {
         builder: (context) {
           return WillPopScope(child: ProgressDialog(stream: streamController.stream),
             onWillPop: (){
-              final force = agent.getInfo().isForce;
               return Future.value(!force);
             },
           );

@@ -30,8 +30,8 @@ class UpdateInfo {
   factory UpdateInfo.fromJson(Map<String,dynamic> json){
     return UpdateInfo(
       hasUpdate: json['hasUpdate'] as bool,
-      isForce: json['force'] as bool,
-      versionCode: json['versionCode'] as int,
+      isForce: (json['force'] as bool?)??false,
+      versionCode: (json['versionCode'] as int?)??1,
       versionName: json['versionName']??'',
       updateContent: json['updateContent']??'',
       url: json['url']??'',

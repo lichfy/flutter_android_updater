@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:install_plugin/install_plugin.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crypto/crypto.dart';
+import 'package:install_plugin_v2/install_plugin_v2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateUtils {
@@ -64,7 +64,7 @@ class UpdateUtils {
     if (! await file.exists()) {
       try {
         await file.create();
-      }catch(FileSystemException){}
+      }catch(e){}
     }
     sp.setString(KEY_UPDATE, md5);
   }

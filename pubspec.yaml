@@ -1,8 +1,7 @@
 name: flutter_android_updater
 description: flutter版本的android app更新组件
-version: 2.0.0
-author:
-homepage:
+version: 2.0.2
+homepage: https://github.com/lichfy/flutter_android_updater
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -12,15 +11,12 @@ dependencies:
     sdk: flutter
 
   path_provider: ^2.0.1
-  connectivity: ^3.0.3
+  connectivity_plus: ^2.3.5
   crypto: ^3.0.1
-  fluttertoast: ^8.0.6
+  fluttertoast: ^8.0.9
   shared_preferences: ^2.0.5
   filesize: ^2.0.1
-  install_plugin: 
-    git:
-      url: https://github.com/lichfy/flutter_install_plugin
-      ref: 98b12751079b34ed37a4af23fb2df0f28da77bdf
+  install_plugin_v2: ^1.0.0
 
 dev_dependencies:
   flutter_test:

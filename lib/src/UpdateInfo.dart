@@ -36,7 +36,7 @@ class UpdateInfo {
       updateContent: json['updateContent']??'',
       url: json['url']??'',
       md5: json['md5']??'',
-      fileSize: num.parse(json['fileSize'])
+      fileSize: json['fileSize']
     );
   }
 }

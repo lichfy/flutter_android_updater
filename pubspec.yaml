@@ -1,6 +1,6 @@
 name: flutter_android_updater
 description: flutter版本的android app更新组件
-version: 2.0.2
+version: 2.0.4
 homepage: https://github.com/lichfy/flutter_android_updater
 
 environment:

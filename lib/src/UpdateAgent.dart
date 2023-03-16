@@ -120,10 +120,6 @@ class UpdateAgent implements ICheckAgent, IUpdateAgent, IDownloadAgent {
         }
 
         if (!_info!.hasUpdate) return; //不需要更新
-        if (Platform.isIOS){
-          prompter!.prompt(this); //显示提示框
-          return;
-        }
 
         _basePath = (await getExternalStorageDirectory())!.path;
 
